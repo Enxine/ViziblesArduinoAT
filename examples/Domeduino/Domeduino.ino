@@ -1,34 +1,34 @@
 /*
-* Domeduino.ino 
-* Version 1.0 December, 2016
-* Copyright 2016 Enxine Dev S.C.
-*
-* This library is free software; you can redistribute it and/or
-* modify it under the terms of the GNU Lesser General Public
-* License as published by the Free Software Foundation; either
-* version 2.1 of the License, or (at your option) any later version.
-*
-* This library is distributed in the hope that it will be useful,
-* but WITHOUT ANY WARRANTY; without even the implied warranty of
-* MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
-* Lesser General Public License for more details.
-*
-* You should have received a copy of the GNU Lesser General Public
-* License along with this library; if not, write to the Free Software
-* Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
-*
-* The latest version of this library can always be found at
-*
-* https://github.com/Enxine/ViziblesArduinoAT
-*
-* THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-* IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-* FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-* AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-* LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-* OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-* THE SOFTWARE.
-*/
+ * Domeduino.ino 
+ * Version 1.0 December, 2016
+ * Copyright 2016 Enxine Dev S.C.
+ *
+ * This library is free software; you can redistribute it and/or
+ * modify it under the terms of the GNU Lesser General Public
+ * License as published by the Free Software Foundation; either
+ * version 2.1 of the License, or (at your option) any later version.
+ *
+ * This library is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU
+ * Lesser General Public License for more details.
+ *
+ * You should have received a copy of the GNU Lesser General Public
+ * License along with this library; if not, write to the Free Software
+ * Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA  02110-1301  USA
+ *
+ * The latest version of this library can always be found at
+ *
+ * https://github.com/Enxine/ViziblesArduinoAT
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+ */
 
 #include <SoftwareSerial.h> 
 #include <AltSoftSerial.h>
@@ -109,12 +109,12 @@ void measurePower() {
 	//while (ESP8266Serial.available() > 0) {
 	//	ESP8266Serial.read();
 	//}
-    //ESP8266Serial.end();
+	//ESP8266Serial.end();
 	//myPowerMeter.startSerialInterface();
 	last_voltage = voltage;
-    voltage = myPowerMeter.readVoltage();
+	voltage = myPowerMeter.readVoltage();
 	last_current = current;
-    current = myPowerMeter.readCurrent();
+	current = myPowerMeter.readCurrent();
 	last_power = power;
 	power = myPowerMeter.readPower();
 	if(!((last_power + last_power*0.15 )> power && (last_power - last_power*0.15 ) < power)) {
@@ -124,11 +124,11 @@ void measurePower() {
 		interval_report = 3000;
 	}
 	last_apparent_power = apparent_power;
-    apparent_power = myPowerMeter.readApparentPower();
+	apparent_power = myPowerMeter.readApparentPower();
 	last_power_factor = power_factor;
-    power_factor = myPowerMeter.readPowerFactor();
-    //myPowerMeter.stopSerialInterface();
-    //ESP8266Serial.begin(9600);
+	power_factor = myPowerMeter.readPowerFactor();
+	//myPowerMeter.stopSerialInterface();
+	//ESP8266Serial.begin(9600);
 }
 
 //****************
@@ -176,8 +176,8 @@ void disconnectCallback(void) {
 }
 
 void setup() 
-  {  
-     if (_DEBUG) Serial.begin(9600);
+{  
+	if (_DEBUG) Serial.begin(9600);
 	
 	cloud.setErrorCb(errorCallback);
 	cloud.setConnectedCb(connectCallback);
@@ -186,19 +186,19 @@ void setup()
 	cloud.startSerialInterface();
 	myPowerMeter.startSerialInterface();
 	
-  }
+}
  
 void loop()
-  {
+{
 	cloud.process();
 	if (!ready) {
 		cloud.ESP8266Reset();
 		delay(1000);
-		}
+	}
 	if (ready && !wifiOn) {
 		cloud.connectWiFi(F("\"YOUR_WIFI_SSID_HERE\",\"YOUR_WIFI_PASSWORD_HERE\""));
 		wifiOn=1;
-		}
+	}
 	if (ready && wifiOn && !macRead){
 		macRead = 1;
 		char *m = cloud.getMac(mac);
@@ -237,13 +237,13 @@ void loop()
 		interval_report = 10000;
 	}
 
-    if (exposed2 && elapsedMillis(previous_measurement) > measure_interval) {
-      measurePower(); 
-      previous_measurement = millis();
-    };  
+	if (exposed2 && elapsedMillis(previous_measurement) > measure_interval) {
+		measurePower(); 
+		previous_measurement = millis();
+	};  
 
-    if (exposed2 && elapsedMillis(previousMillis_report) > interval_report) {
-        if (_DEBUG) {Serial.println(F("Send power update to cloud"));};
+	if (exposed2 && elapsedMillis(previousMillis_report) > interval_report) {
+		if (_DEBUG) {Serial.println(F("Send power update to cloud"));};
 		if(!first_update && elapsedMillis(lastAcceleration) < 200){
 			cloud.update();
 			cloud.print_P(F("\"power\",\""));
@@ -275,6 +275,6 @@ void loop()
 		cloud.println_P(F("\""));
 		first_update=0;
 		
-        previousMillis_report = millis();
-    }
- }
+		previousMillis_report = millis();
+	}
+}
