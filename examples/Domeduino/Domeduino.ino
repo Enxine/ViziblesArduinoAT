@@ -38,7 +38,7 @@
 #include <PowerMeter78M6613.h>
 #include <avr/pgmspace.h>
 
-#define PIN_RELAY 15 
+#define PIN_RELAY 8 
 
 //Power Meter 78M6613 serial connection pins
 #define PM78M6613_TX_PIN 6
@@ -107,7 +107,7 @@ void switchOff (const char *) {
 void measurePower() {
 	cloud.stopSerialInterface();
 	myPowerMeter.startSerialInterface();
-
+		
 	last_voltage = voltage;
 	voltage = myPowerMeter.readVoltage();
 	last_current = current;
