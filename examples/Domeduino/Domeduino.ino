@@ -46,14 +46,16 @@
 
 //ESP8266 WiFi control pins
 #define ESP8266_CH_PD_PIN 12
-#define ESP8266_RESET_PIN 10
+#define ESP8266_RESET_PIN 9
+#define ESP8266_TX_PIN 3
+#define ESP8266_RX_PIN 4
 
 #define _DEBUG true
  
 #define EEPROM_CONFIG_START 32 
  
 #ifndef ESP8266_USE_ALTSOFTSERIAL
-ViziblesArduinoAT cloud = ViziblesArduinoAT(9, 8, ESP8266_RESET_PIN, ESP8266_CH_PD_PIN); 
+ViziblesArduinoAT cloud = ViziblesArduinoAT(ESP8266_TX_PIN, ESP8266_RX_PIN, ESP8266_RESET_PIN, ESP8266_CH_PD_PIN); 
 #else
 ViziblesArduinoAT cloud = ViziblesArduinoAT(ESP8266_RESET_PIN, ESP8266_CH_PD_PIN); 
 #endif
