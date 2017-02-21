@@ -105,12 +105,9 @@ void switchOff (const char *) {
 //********************                   
 
 void measurePower() {
-	//ESP8266Serial.flush();
-	//while (ESP8266Serial.available() > 0) {
-	//	ESP8266Serial.read();
-	//}
-	//ESP8266Serial.end();
-	//myPowerMeter.startSerialInterface();
+	cloud.stopSerialInterface();
+	myPowerMeter.startSerialInterface();
+
 	last_voltage = voltage;
 	voltage = myPowerMeter.readVoltage();
 	last_current = current;
@@ -127,8 +124,9 @@ void measurePower() {
 	apparent_power = myPowerMeter.readApparentPower();
 	last_power_factor = power_factor;
 	power_factor = myPowerMeter.readPowerFactor();
-	//myPowerMeter.stopSerialInterface();
-	//ESP8266Serial.begin(9600);
+
+	myPowerMeter.stopSerialInterface();
+	cloud.startSerialInterface();
 }
 
 //****************
@@ -184,8 +182,6 @@ void setup()
 	cloud.setDisconnectedCb(disconnectCallback);
 	cloud.setResetCb(resetCallback);
 	cloud.startSerialInterface();
-	myPowerMeter.startSerialInterface();
-	
 }
  
 void loop()
