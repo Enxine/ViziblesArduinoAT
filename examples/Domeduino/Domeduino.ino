@@ -134,7 +134,7 @@ void measurePower() {
 //**************** 
 
 const char vz_id[] PROGMEM = "\"id\",\"domeduino-";
-const char vz_options[] PROGMEM = "\",\"type\",\"enx-dd-01\",\"keyID\",\"Gp2naLrsSpFE\",\"keySecret\",\"wGyFTwIHvYwGCBDJyA7j\"";
+const char vz_options[] PROGMEM = "\",\"type\",\"enx-dd-01\",\"keyID\",\"YOUR_API_KEY_ID_HERE\",\"keySecret\",\"YOUR_API_KEY_SECRET_HERE\"";
  
 int ready = 0;
 int connected = 0; 
